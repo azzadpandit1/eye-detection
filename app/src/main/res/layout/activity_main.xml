@@ -50,9 +50,17 @@
 
 
         <SurfaceView
+            android:layout_weight="1"
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/textView"
+        android:text="@string/app_name"
+        android:textSize="20dp"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 
