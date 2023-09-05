@@ -4,27 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.PackageManager;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraCaptureSession;
-import android.hardware.camera2.CameraDevice;
-import android.hardware.camera2.CameraManager;
-import android.hardware.camera2.CaptureRequest;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import com.example.eyetrackjava.tracker.FaceTracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.vision.CameraSource;
@@ -33,10 +20,8 @@ import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
-import com.google.android.gms.vision.face.LargestFaceFocusingProcessor;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -67,24 +52,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createCameraSource() {
-        FaceDetector detector = new FaceDetector.Builder(getApplicationContext())
-                .setTrackingEnabled(true)
-                .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
-                .build();
+        FaceDetector detector = new FaceDetector.Builder(getApplicationContext()).setTrackingEnabled(true).setClassificationType(FaceDetector.ALL_CLASSIFICATIONS).build();
 
-        detector.setProcessor(
-                new MultiProcessor.Builder<>(new GraphicFaceTrackerFactory())
-                        .build());
+        detector.setProcessor(new MultiProcessor.Builder<>(new GraphicFaceTrackerFactory()).build());
 
         if (!detector.isOperational()) {
             Log.w(TAG, "Face detector dependencies are not yet available.");
         }
 
-        mCameraSource = new CameraSource.Builder(getApplicationContext(), detector)
-                .setRequestedPreviewSize(640, 480)
-                .setFacing(CameraSource.CAMERA_FACING_FRONT)
-                .setRequestedFps(30.0f)
-                .build();
+        mCameraSource = new CameraSource.Builder(getApplicationContext(), detector).setRequestedPreviewSize(640, 480).setFacing(CameraSource.CAMERA_FACING_FRONT).setRequestedFps(30.0f).build();
     }
 
     private class GraphicFaceTrackerFactory implements MultiProcessor.Factory<Face> {
