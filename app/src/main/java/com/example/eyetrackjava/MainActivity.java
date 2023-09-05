@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
@@ -73,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
     private class GraphicFaceTracker extends Tracker<Face> {
         @Override
         public void onUpdate(Detector.Detections<Face> detections, Face face) {
+
+
+
             // Perform face reaction and eye tracking here
             boolean isBothEyesOpen = face.getIsLeftEyeOpenProbability() > 0.5f && face.getIsRightEyeOpenProbability() > 0.5f;
             boolean isLeftEyeOpen = face.getIsLeftEyeOpenProbability() > 0.5f;
@@ -95,6 +100,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            /*
+            SparseArray<Face> faces = detections.getDetectedItems();
+            *//*if (faces.size() > 0) {
+
+            }else {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this, "face not found", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }*/
+
+
         }
 
         @Override
